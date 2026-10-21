@@ -39,6 +39,7 @@ jobs:
       - run: node scripts/seed.mjs
       - run: PGPASSWORD=localtest psql -v ON_ERROR_STOP=1 -h localhost -U postgres -d dawa_test -f backend/test/database.sql
       - run: python3 scripts/security_scan.py
+      - run: python3 scripts/check_release_policy.py
       - run: node scripts/bundle.mjs
   flutter:
     runs-on: ubuntu-latest
