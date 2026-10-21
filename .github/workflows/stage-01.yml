@@ -32,7 +32,7 @@ jobs:
           cache-dependency-path: backend/package-lock.json
       - run: npm ci --prefix backend
       - run: npm --prefix backend test
-      - run: npm --prefix backend audit --omit=dev --audit-level=high
+      - run: npm --prefix backend audit --audit-level=high
       - run: PGPASSWORD=localtest psql -h localhost -U postgres -d dawa_test -c 'CREATE ROLE dawa_owner;'
       - run: node scripts/migrate.mjs
       - run: node scripts/migrate.mjs
