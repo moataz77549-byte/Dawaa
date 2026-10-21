@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+.dart_tool/
+build/
+node_modules/
+coverage/
+*.jks
+*.keystore
+android/local.properties
+.flutter-plugins-dependencies
+.neon
+*.zip
+backend/dist/
+*.iml
+.idea/

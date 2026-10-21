@@ -1,0 +1,7 @@
+{
+  "current_stage": 1,
+  "first_beta_stage": 5,
+  "first_stable_stage": 10,
+  "public_apk_allowed": false,
+  "internal_compile_checks_allowed": true
+}

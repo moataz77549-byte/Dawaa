@@ -1,0 +1,55 @@
+name: Android device gates (no APK distribution)
+on:
+  workflow_dispatch:
+  push:
+    branches: [stage-01-neon-offline-foundation]
+    paths: ['app/**', '.github/workflows/android-device-gates.yml']
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  device:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [26, 35]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.7'
+          channel: stable
+          cache: true
+      - working-directory: app
+        run: flutter pub get --enforce-lockfile
+      - name: Enable KVM for CI emulator
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api }}
+          target: default
+          arch: x86_64
+          profile: pixel_2
+          ram-size: 1024M
+          heap-size: 256M
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -memory 1024 -cores 2 -camera-back none -camera-front none -no-metrics
+          disable-animations: true
+          working-directory: app
+          script: |
+            bash ../scripts/device_network.sh off
+            flutter test integration_test/offline_test.dart
+            bash ../scripts/device_network.sh on
+            flutter test integration_test/neon_download_test.dart
+            bash ../scripts/device_network.sh off
+            flutter test integration_test/downloaded_offline_test.dart
