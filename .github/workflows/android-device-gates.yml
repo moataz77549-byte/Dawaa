@@ -47,9 +47,11 @@ jobs:
           disable-animations: true
           working-directory: app
           script: |
+            adb root
+            adb wait-for-device
             bash ../scripts/device_network.sh off
-            flutter test integration_test/offline_test.dart
+            flutter test --no-uninstall integration_test/offline_test.dart
             bash ../scripts/device_network.sh on
-            flutter test integration_test/neon_download_test.dart
+            flutter test --no-uninstall integration_test/neon_download_test.dart
             bash ../scripts/device_network.sh off
-            flutter test integration_test/downloaded_offline_test.dart
+            flutter test --no-uninstall integration_test/downloaded_offline_test.dart

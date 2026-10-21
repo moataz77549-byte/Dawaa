@@ -5,7 +5,8 @@ case "$mode" in off) action=disable; airplane_action=enable; flag=1; state=true;
 adb wait-for-device
 printf 'Device API: '
 adb shell getprop ro.build.version.sdk
-# Airplane mode is supported on both API 26 and modern system images.
+# The CI uses rootable AOSP images; the workflow restarts adbd as root.
+# Older Android denies the protected airplane broadcast to the shell UID.
 adb shell settings put global airplane_mode_on "$flag"
 if adb shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state "$state"; then
   printf 'Airplane-mode broadcast delivered.\n'
