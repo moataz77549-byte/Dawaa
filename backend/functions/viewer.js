@@ -11,7 +11,15 @@ try {
  const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.minDistance=2;controls.maxDistance=10;
  window.resetModel=()=>{camera.position.set(3,2,4);controls.target.set(0,0,0);controls.update();};
  const resize=()=>{const w=window.innerWidth,h=window.innerHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();};resize();window.addEventListener('resize',resize);
- new GLTFLoader().load('/model.glb',g=>{scene.add(g.scene);window.ViewerStatus?.postMessage('ready');},undefined,()=>window.ViewerStatus?.postMessage('error'));
+ const started=performance.now();
+ new GLTFLoader().load('/model.glb',g=>{
+   try {
+     scene.add(g.scene);renderer.render(scene,camera);
+     if(renderer.getContext().isContextLost()||renderer.info.render.calls<1)throw Error('No rendered geometry');
+     window.ViewerStatus?.postMessage('metrics:'+JSON.stringify({loadAndFirstRenderMs:Math.round(performance.now()-started),drawCalls:renderer.info.render.calls,geometries:renderer.info.memory.geometries}));
+     window.ViewerStatus?.postMessage('ready');
+   }catch(e){window.ViewerStatus?.postMessage('error');}
+ },undefined,()=>window.ViewerStatus?.postMessage('error'));
  renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera);});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)renderer.setAnimationLoop(null);else renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera);});});
 }catch(e){window.ViewerStatus?.postMessage('error');}
