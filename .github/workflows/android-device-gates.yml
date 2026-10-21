@@ -4,6 +4,9 @@ on:
   push:
     branches: [stage-01-neon-offline-foundation]
     paths: ['app/**', '.github/workflows/android-device-gates.yml']
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -38,15 +41,15 @@ jobs:
           target: default
           arch: x86_64
           profile: pixel_2
+          ram-size: 1024M
+          heap-size: 256M
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -memory 1024 -cores 2 -camera-back none -camera-front none -no-metrics
           disable-animations: true
           working-directory: app
           script: |
-            adb shell svc wifi disable
-            adb shell svc data disable
+            bash ../scripts/device_network.sh off
             flutter test integration_test/offline_test.dart
-            adb shell svc wifi enable
-            adb shell svc data enable
+            bash ../scripts/device_network.sh on
             flutter test integration_test/neon_download_test.dart
-            adb shell svc wifi disable
-            adb shell svc data disable
+            bash ../scripts/device_network.sh off
             flutter test integration_test/downloaded_offline_test.dart

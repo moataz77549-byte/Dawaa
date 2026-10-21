@@ -402,11 +402,30 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
   List<Map<String, dynamic>> catalog = [];
   String? error;
   bool loading = false;
+  Map<String, int> installedVersions = {};
+  Map<String, String> jobStates = {};
+  Future<void> loadLocal() async {
+    final db = ref.read(databaseProvider);
+    final packs = await db.packs();
+    final jobs = await db.jobs();
+    if (mounted) {
+      setState(() {
+        installedVersions = {
+          for (final p in packs) p['id'] as String: p['version'] as int,
+        };
+        jobStates = {
+          for (final j in jobs) j['id'] as String: j['status'] as String,
+        };
+      });
+    }
+  }
+
   Future<void> load() async {
     setState(() {
       loading = true;
       error = null;
     });
+    await loadLocal();
     try {
       final items = await ref.read(apiProvider).packs();
       if (mounted) {
@@ -462,6 +481,7 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
       );
       if (ok == true) {
         await ref.read(managerProvider).install(m);
+        await loadLocal();
         ref.read(refreshProvider.notifier).state++;
       }
     } catch (e) {
@@ -523,7 +543,14 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
               ],
             ),
           ],
-          if (manager.error != null) Text(manager.error!),
+          if (manager.error != null)
+            Text(
+              tr(
+                ref,
+                'تعذر إكمال التنزيل. تحقق من الاتصال وإعدادات Wi-Fi والمساحة. تظل النسخة السابقة محفوظة.',
+                'Unable to finish. Check connection, Wi-Fi settings and storage. Your previous version is preserved.',
+              ),
+            ),
           for (final p in catalog)
             Card(
               child: Padding(
@@ -537,6 +564,13 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
                     ),
                     Text(
                       '${p['manifest']['size_bytes']} bytes • v${p['version']} • ${p['manifest']['license']}',
+                    ),
+                    Text(
+                      installedVersions[p['id']] == null
+                          ? tr(ref, 'غير منزّل', 'Not downloaded')
+                          : installedVersions[p['id']]! < (p['version'] as int)
+                          ? tr(ref, 'تحديث متاح', 'Update available')
+                          : tr(ref, 'مكتمل محليًا', 'Available offline'),
                     ),
                     Wrap(
                       spacing: 8,
@@ -558,15 +592,29 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
                           ),
                         ),
                         FilledButton.tonalIcon(
-                          onPressed: manager.active == null
+                          onPressed:
+                              manager.active == null &&
+                                  installedVersions[p['id']] != p['version']
                               ? () => download(p['id'])
                               : null,
                           icon: const Icon(Icons.download),
                           label: Text(
                             tr(
                               ref,
-                              'تنزيل / استئناف / تحديث',
-                              'Download / resume / update',
+                              installedVersions[p['id']] == p['version']
+                                  ? 'مثبت'
+                                  : installedVersions[p['id']] != null
+                                  ? 'تحديث'
+                                  : jobStates[p['id']] == 'paused'
+                                  ? 'استئناف'
+                                  : 'تنزيل دون إنترنت',
+                              installedVersions[p['id']] == p['version']
+                                  ? 'Installed'
+                                  : installedVersions[p['id']] != null
+                                  ? 'Update'
+                                  : jobStates[p['id']] == 'paused'
+                                  ? 'Resume'
+                                  : 'Download offline',
                             ),
                           ),
                         ),
@@ -616,6 +664,7 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
                               TextButton(
                                 onPressed: () async {
                                   await manager.remove(p['id']);
+                                  await loadLocal();
                                   ref.read(refreshProvider.notifier).state++;
                                   if (mounted) {
                                     setState(() {});
@@ -642,7 +691,7 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
                   ListTile(
                     title: Text(j['id']),
                     subtitle: Text(
-                      '${j['status']} • ${j['received']}/${j['total']} ${j['error'] ?? ''}',
+                      '${tr(ref, {'downloading': 'جاري التنزيل', 'installing': 'جاري التثبيت', 'complete': 'مكتمل', 'paused': 'متوقف مؤقتًا', 'cancelled': 'ملغى', 'failed': 'تعذر التنزيل'}[j['status']] ?? 'غير منزّل', j['status'])} • ${j['received']}/${j['total']}',
                     ),
                   ),
               ],

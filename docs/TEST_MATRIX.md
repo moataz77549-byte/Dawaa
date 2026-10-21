@@ -13,11 +13,11 @@
 | Mocked transport pack fault injection | Passed | Corrupt update preserves old version, pause/resume, cancel, low storage |
 | Dependency audit | npm: 0 vulnerabilities | Current locked backend production dependencies |
 | Secret/client-boundary scan | Passed | scripts/security_scan.py |
-| Android ARM64 compilation | Not run | No local Android SDK; CI configured, remote repo bootstrap blocked |
-| API 26 and newer device runtime | Not run | Emulator CI workflow prepared, not executed |
+| Android ARM64 compilation | Not run | No local Android SDK; GitHub CI started |
+| API 26 and newer device runtime | Not run | GitHub emulator jobs running; result pending |
 | 3D GLB parsing/render/performance | Unverified on device | Valid original GLB; renderer code bundled, runtime gate open |
 | Network-loss/timeout/process-kill on Android | Unverified | Host fault tests are not device lifecycle proof |
-| GitHub branch/PR/CI | Blocked | Empty repository initialization needs authorization; terminal Git lacks auth |
+| GitHub branch/PR/CI | Uploaded; Draft PR #1; CI running | Repository bootstrap resolved through connected account |
 | Production/root Neon deployment | Not performed | Development branch only until review gates |
 
 Unit tests use a MockClient for deterministic faults; real Neon evidence is separate.

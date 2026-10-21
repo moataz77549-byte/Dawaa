@@ -290,7 +290,19 @@ class PackManager extends ChangeNotifier {
       }
       await _state(manifest.id, cancelRequested ? 'cancelled' : 'paused');
     } catch (e) {
-      await _state(manifest.id, 'failed', message: e.toString());
+      final text = e.toString();
+      final code = text.contains('Insufficient free')
+          ? 'storage_low'
+          : text.contains('Wi-Fi required')
+          ? 'wifi_required'
+          : text.contains('Checksum') || text.contains('Oversized')
+          ? 'integrity_failed'
+          : text.contains('already installed')
+          ? 'already_installed'
+          : e is SocketException || e is TimeoutException || e is HttpException
+          ? 'network_failed'
+          : 'install_failed';
+      await _state(manifest.id, 'failed', message: code);
     } finally {
       active = null;
       notifyListeners();
