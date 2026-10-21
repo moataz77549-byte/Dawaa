@@ -82,3 +82,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/live_smoke.py
+      - run: API_BASE_URL=https://br-noisy-poetry-bats6www-api.compute.c-8.eu-central-1.aws.neon.tech python3 scripts/live_smoke.py

@@ -10,7 +10,7 @@ class Api {
           const String.fromEnvironment(
             'API_BASE_URL',
             defaultValue:
-                'https://br-still-mode-balcyppo-api.compute.c-8.eu-central-1.aws.neon.tech',
+                'https://br-noisy-poetry-bats6www-api.compute.c-8.eu-central-1.aws.neon.tech',
           );
   final http.Client client;
   final String base;
