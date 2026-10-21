@@ -1,0 +1,51 @@
+{
+  "pack_id": "circulation-demo",
+  "pack_version": 1,
+  "schema_version": 1,
+  "min_app_version": "0.1.0",
+  "title_ar": "حزمة إثبات الدورة الدموية",
+  "title_en": "Circulation proof pack",
+  "scope_type": "body_system",
+  "scope_id": "circulation",
+  "language": "bilingual",
+  "asset_quality": "proof",
+  "category": "anatomy",
+  "description": "Original educational text plus geometric engineering assets, not an anatomical model.",
+  "published_at": "2026-10-22T00:00:00Z",
+  "publisher": "Dawa & Hayah",
+  "source_references": [
+    "https://www.nhlbi.nih.gov/health/heart"
+  ],
+  "license": "CC-BY-4.0",
+  "attribution": "Dawa & Hayah; geometric assets CC0",
+  "status": "published",
+  "dependencies": [],
+  "files": [
+    {
+      "object_key": "circulation-demo/1/content.json",
+      "relative_path": "content.json",
+      "mime_type": "application/json",
+      "size_bytes": 896,
+      "sha256": "93b95f9806642bc62b0846681c96e45ae0c681643a96ca5f03226e146f9fa595",
+      "asset_id": "circulation-demo-content-json"
+    },
+    {
+      "object_key": "circulation-demo/1/diagram.png",
+      "relative_path": "diagram.png",
+      "mime_type": "image/png",
+      "size_bytes": 533,
+      "sha256": "606ca2eb76993e83ddbd0d06a3254e13ca1d60d4615b6c2c3ec2940f8fbf70eb",
+      "asset_id": "circulation-demo-diagram-png"
+    },
+    {
+      "object_key": "circulation-demo/1/demo.glb",
+      "relative_path": "demo.glb",
+      "mime_type": "model/gltf-binary",
+      "size_bytes": 796,
+      "sha256": "bbb51706132ef9e885684646c9f7314f9fdbc6b6b3c8667c84f01063545d64b5",
+      "asset_id": "circulation-demo-demo-glb"
+    }
+  ],
+  "size_bytes": 2225,
+  "total_uncompressed_bytes": 2225
+}
