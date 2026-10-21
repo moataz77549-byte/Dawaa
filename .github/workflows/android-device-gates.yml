@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [stage-01-neon-offline-foundation]
-    paths: ['app/**', '.github/workflows/android-device-gates.yml']
+    paths: ['app/**', '.github/workflows/android-device-gates.yml', 'scripts/device_network.sh']
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
