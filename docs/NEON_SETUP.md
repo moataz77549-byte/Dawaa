@@ -1,17 +1,21 @@
 # Neon setup and deployment
 
 Dedicated project: `plain-term-00662915` (`dawa-hayah`), `aws-eu-central-1`.
-Production/root branch: `br-noisy-poetry-bats6www` (`main`, reserved).
+Production/root branch: `br-noisy-poetry-bats6www` (`main`).
 Development branch: `br-still-mode-balcyppo` (`stage-01-neon-offline-foundation`).
 Free organization plan confirmed at provisioning; compute capped at 0.25 CU.
 No paid plan was activated. The account rejected a custom suspend interval;
 project creation succeeded using the account defaults.
 
-On the development branch: three migrations applied, 12 bilingual introductions,
+On both the main and development branches: three migrations applied, 12 bilingual introductions,
 4 private buckets (`anatomy-models`, `medical-images`, `offline-packs`, `source-media`),
 API slug `api`. Only `offline-packs` currently contains the three proof objects.
-The root branch has not received the schema or deployment; do not confuse it with
-staging. Other user projects were not modified.
+The root branch was provisioned after schema/security tests passed. The three-file
+real API/Storage smoke passed independently on root (NEON_MAIN_SMOKE_EVIDENCE.json).
+Other user projects were not modified.
+
+Public main API:
+https://br-noisy-poetry-bats6www-api.compute.c-8.eu-central-1.aws.neon.tech
 
 Public staging API:
 https://br-still-mode-balcyppo-api.compute.c-8.eu-central-1.aws.neon.tech

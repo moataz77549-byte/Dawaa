@@ -26,6 +26,12 @@ class _ModelViewerState extends State<ModelViewer> {
 
   Future<void> start() async {
     try {
+      final available = await const MethodChannel(
+        'ye.moataz.dawa/storage',
+      ).invokeMethod<bool>('webViewAvailable');
+      if (available != true) {
+        throw StateError('WebView provider unavailable');
+      }
       final model =
           widget.bytes ??
           (widget.file == null
@@ -72,11 +78,21 @@ class _ModelViewerState extends State<ModelViewer> {
             if (message.message == 'error' && mounted) {
               setState(() => error = '3D unavailable / تعذر عرض المجسم');
             }
+            if (message.message.startsWith('metrics:')) {
+              debugPrint('3D renderer ${message.message}');
+            }
             if (message.message == 'ready') {
               if (mounted) {
                 setState(() => ready = true);
               }
               debugPrint('3D loaded in ${stopwatch.elapsedMilliseconds}ms');
+              try {
+                debugPrint(
+                  '3D Flutter app RSS bytes: ${ProcessInfo.currentRss}',
+                );
+              } catch (_) {
+                debugPrint('App RSS unavailable');
+              }
             }
           },
         )

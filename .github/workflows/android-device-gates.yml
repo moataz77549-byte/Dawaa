@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [stage-01-neon-offline-foundation]
-    paths: ['app/**', '.github/workflows/android-device-gates.yml']
+    paths: ['app/**', '.github/workflows/android-device-gates.yml', 'scripts/device_network.sh']
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
@@ -38,7 +38,7 @@ jobs:
       - uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api }}
-          target: default
+          target: ${{ matrix.api == 26 && 'google_apis' || 'default' }}
           arch: x86_64
           profile: pixel_2
           ram-size: 1024M
@@ -47,9 +47,17 @@ jobs:
           disable-animations: true
           working-directory: app
           script: |
+            adb root
+            adb wait-for-device
             bash ../scripts/device_network.sh off
-            flutter test integration_test/offline_test.dart
+            timeout 10m flutter drive --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/offline_test.dart
+            adb shell am force-stop ye.moataz.dawahayah.dawa_hayah
+            adb forward --remove-all
             bash ../scripts/device_network.sh on
-            flutter test integration_test/neon_download_test.dart
+            timeout 10m flutter drive --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/neon_download_test.dart
+            adb shell am force-stop ye.moataz.dawahayah.dawa_hayah
+            adb forward --remove-all
             bash ../scripts/device_network.sh off
-            flutter test integration_test/downloaded_offline_test.dart
+            timeout 10m flutter drive --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/downloaded_offline_test.dart
+            adb shell am force-stop ye.moataz.dawahayah.dawa_hayah
+            adb forward --remove-all

@@ -17,8 +17,8 @@
 | API 26 and newer device runtime | Not run | GitHub emulator jobs running; result pending |
 | 3D GLB parsing/render/performance | Unverified on device | Valid original GLB; renderer code bundled, runtime gate open |
 | Network-loss/timeout/process-kill on Android | Unverified | Host fault tests are not device lifecycle proof |
-| GitHub branch/PR/CI | Uploaded; Draft PR #1; CI running | Repository bootstrap resolved through connected account |
-| Production/root Neon deployment | Not performed | Development branch only until review gates |
+| GitHub branch/PR/CI | PR #1 observed merged; corrective Draft PR #2; CI running | Current Android validation fixes on stage branch |
+| Production/root Neon deployment | Passed real API/Storage smoke | NEON_MAIN_SMOKE_EVIDENCE.json |
 
 Unit tests use a MockClient for deterministic faults; real Neon evidence is separate.
 Linux test host required libsqlite3.so pointing to the installed libsqlite3.so.0;

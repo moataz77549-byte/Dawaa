@@ -1,6 +1,6 @@
 """Real remote API + Storage proof, then local-only hash/read proof (not Android)."""
-import json,urllib.request,hashlib,tempfile,pathlib,datetime,struct
-BASE='https://br-still-mode-balcyppo-api.compute.c-8.eu-central-1.aws.neon.tech'
+import os,json,urllib.request,hashlib,tempfile,pathlib,datetime,struct
+BASE=os.environ.get('API_BASE_URL','https://br-still-mode-balcyppo-api.compute.c-8.eu-central-1.aws.neon.tech')
 def get(path):
  with urllib.request.urlopen(BASE+path,timeout=30) as r:return json.load(r)
 assert get('/health')['ok']
