@@ -50,8 +50,14 @@ jobs:
             adb root
             adb wait-for-device
             bash ../scripts/device_network.sh off
-            timeout 8m flutter test --no-dds --no-uninstall integration_test/offline_test.dart
+            timeout 10m flutter drive --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/offline_test.dart
+            adb shell am force-stop ye.moataz.dawahayah.dawa_hayah
+            adb forward --remove-all
             bash ../scripts/device_network.sh on
-            timeout 8m flutter test --no-dds --no-uninstall integration_test/neon_download_test.dart
+            timeout 10m flutter drive --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/neon_download_test.dart
+            adb shell am force-stop ye.moataz.dawahayah.dawa_hayah
+            adb forward --remove-all
             bash ../scripts/device_network.sh off
-            timeout 8m flutter test --no-dds --no-uninstall integration_test/downloaded_offline_test.dart
+            timeout 10m flutter drive --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/downloaded_offline_test.dart
+            adb shell am force-stop ye.moataz.dawahayah.dawa_hayah
+            adb forward --remove-all
