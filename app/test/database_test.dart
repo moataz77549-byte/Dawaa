@@ -16,7 +16,7 @@ void main() {
       await db.recordRead('circulation');
       await db.setSetting('language', 'en');
       await db.seed(json: seed);
-      expect((await db.contents()).length, 12);
+      expect((await db.contents()).length, 14);
       expect((await db.content('circulation'))!['body_en'], isNotEmpty);
       expect(await db.bookmarked('circulation'), isTrue);
       expect(await db.setting('language'), 'en');

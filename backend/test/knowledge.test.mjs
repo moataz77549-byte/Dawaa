@@ -51,7 +51,7 @@ test('timeouts retry at most three times; conditional GET reuses only an actual 
  let n=0;const c=mockTransport(async(url,options)=>{n++;if(n===1)return new Response('{}',{headers:{'content-type':'application/json',etag:'"v1"'}});assert.equal(options.headers['If-None-Match'],'"v1"');return new Response(null,{status:304});});
  const s=sourceById('rxnorm');assert.equal((await c.get(s,'/REST/test')).cache_hit,false);assert.equal((await c.get(s,'/REST/test')).cache_hit,true);
 });
-test('disabled sources, URL escapes and FDA query operators never execute',async()=>{
+test('disabled sources and URL escapes never execute',async()=>{
  let calls=0;const t=mockTransport(async()=>{calls++;throw Error('not expected');});
  await assert.rejects(t.get({...sourceById('rxnorm'),enabled:false},'/REST/test'),e=>e.code==='source_disabled');
  await assert.rejects(t.get(sourceById('rxnorm'),'https://evil.invalid/'),e=>e.code==='unsafe_source_url');assert.equal(calls,0);

@@ -40,6 +40,18 @@ String _kind(String? value, WidgetRef ref) => switch (value) {
   _ => _t(ref, 'مصطلح أو مرجع', 'Term or reference'),
 };
 
+String _status(dynamic value, WidgetRef ref) {
+  final ar = {
+    'healthy': 'متاح',
+    'unavailable': 'غير متاح',
+    'unknown': 'حالة السحب غير معلومة',
+    'retracted': 'مسحوب',
+    'notice': 'إشعار تصحيح أو سحب',
+    'corrected': 'مصَحّح',
+  };
+  return ref.watch(localeProvider) == 'ar' ? ar[value] ?? '$value' : '$value';
+}
+
 class KnowledgeSearchScreen extends ConsumerStatefulWidget {
   const KnowledgeSearchScreen({super.key, this.initialQuery = ''});
   final String initialQuery;
@@ -351,7 +363,7 @@ class _KnowledgeConceptState extends ConsumerState<KnowledgeConceptScreen> {
                           child: ListTile(
                             title: Text(r['bibliography']['title'] ?? ''),
                             subtitle: Text(
-                              '${r['retraction_state']} • ${r['doi'] ?? r['pmid'] ?? ''}',
+                              '${_status(r['retraction_state'], ref)} • ${r['doi'] ?? r['pmid'] ?? ''}',
                             ),
                             onTap: () => _open(
                               context,

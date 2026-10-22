@@ -1,7 +1,7 @@
-name: Stage 01 gates
+name: Foundation and medical knowledge gates
 on:
   push:
-    branches: [stage-01-neon-offline-foundation, main]
+    branches: [stage-01-neon-offline-foundation, stage-02-medical-knowledge-sources, main]
   pull_request:
   workflow_dispatch:
 concurrency:
@@ -38,6 +38,9 @@ jobs:
       - run: node scripts/migrate.mjs
       - run: node scripts/seed.mjs
       - run: PGPASSWORD=localtest psql -v ON_ERROR_STOP=1 -h localhost -U postgres -d dawa_test -f backend/test/database.sql
+      - run: node scripts/seed_sources.mjs
+      - run: PGPASSWORD=localtest psql -v ON_ERROR_STOP=1 -h localhost -U postgres -d dawa_test -f backend/test/knowledge_database.sql
+      - run: python3 scripts/build_medical_pack.py && git diff --exit-code backend/storage
       - run: python3 scripts/security_scan.py
       - run: python3 scripts/check_release_policy.py
       - run: node scripts/bundle.mjs

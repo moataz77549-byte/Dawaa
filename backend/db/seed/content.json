@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "items": [
     {
       "id": "circulation",
@@ -188,6 +188,38 @@
       "source_title": "Reference for further reading",
       "license": "CC-BY-4.0",
       "attribution": "Dawa & Hayah — original educational summary",
+      "review_status": "needs_review",
+      "status": "published",
+      "clinical": false,
+      "revision": 1
+    },
+    {
+      "id": "source-reading",
+      "category": "home",
+      "title_ar": "كيف تقرأ مصدرًا؟",
+      "title_en": "Reading a source",
+      "body_ar": "افحص الجهة الناشرة وتاريخ المصدر ونوع الدليل والترخيص. وجود سجل في قاعدة بيانات لا يعني اعتماد توصية علاجية.",
+      "body_en": "Check publisher, source date, evidence type and license. A database record does not establish approval of a treatment recommendation.",
+      "source_url": "https://github.com/moataz77549-byte/Dawaa",
+      "source_title": "Dawa & Hayah original source-reading guidance",
+      "license": "CC-BY-4.0",
+      "attribution": "Dawa & Hayah — original methodology text",
+      "review_status": "needs_review",
+      "status": "published",
+      "clinical": false,
+      "revision": 1
+    },
+    {
+      "id": "identifier-types",
+      "category": "home",
+      "title_ar": "الاسم والمعرّف والنوع",
+      "title_en": "Names, identifiers and entity types",
+      "body_ar": "قد يتشابه الاسم بينما يختلف الكيان: مكوّن دوائي أو منتج أو مركّب كيميائي. احتفظ بنوع المعرّف ومصدره، ولا تعتبر تشابه الأسماء إثباتًا للتطابق.",
+      "body_en": "Similar names can refer to different entities: ingredient, product or chemical compound. Keep the identifier scheme and source; name similarity alone does not prove identity.",
+      "source_url": "https://github.com/moataz77549-byte/Dawaa",
+      "source_title": "Dawa & Hayah original source-reading guidance",
+      "license": "CC-BY-4.0",
+      "attribution": "Dawa & Hayah — original methodology text",
       "review_status": "needs_review",
       "status": "published",
       "clinical": false,

@@ -1,0 +1,36 @@
+{
+  "pack_id": "medical-identities",
+  "pack_version": 1,
+  "schema_version": 1,
+  "min_app_version": "0.2.0",
+  "min_local_schema": 2,
+  "title_ar": "معرّفات دوائية ومصادرها",
+  "title_en": "Medicine terminology identifiers and sources",
+  "scope_type": "knowledge",
+  "scope_id": "ingredient-identities",
+  "language": "bilingual",
+  "asset_quality": "text",
+  "category": "medicines",
+  "description": "20 verified RxNorm ingredient identities. Independent Arabic drafts pending review. No clinical claims or dosing.",
+  "published_at": "2026-10-22T00:00:00Z",
+  "publisher": "Dawa & Hayah",
+  "source_references": [
+    "https://lhncbc.nlm.nih.gov/RxNav/TermsofService.html"
+  ],
+  "license": "CC-BY-4.0",
+  "attribution": "Original wrapper CC-BY-4.0; NLM non-proprietary RxNorm metadata with source attribution; independent Arabic drafts.",
+  "status": "published",
+  "dependencies": [],
+  "files": [
+    {
+      "object_key": "medical-identities/1/content.json",
+      "relative_path": "content.json",
+      "mime_type": "application/json",
+      "size_bytes": 40274,
+      "sha256": "b6f78572a35d9e0833d3fa248b5d21ccd08d15fc6712f992a51d6cd7c51c4bed",
+      "asset_id": "medical-identities-content-v1"
+    }
+  ],
+  "size_bytes": 40274,
+  "total_uncompressed_bytes": 40274
+}

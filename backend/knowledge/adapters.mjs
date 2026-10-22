@@ -3,7 +3,7 @@ import {XMLParser,XMLValidator} from 'fast-xml-parser';
 import {sourceById} from './registry.mjs';
 import {SourceError,SourceTransport} from './transport.mjs';
 const list=x=>x==null?[]:Array.isArray(x)?x:[x];
-const text=(x,max=500)=>typeof x==='string'?x.replace(/<[^>]*>/g,'').trim().slice(0,max):'';
+const text=(x,max=500)=>typeof x==='string'?x.replace(/&lt;/gi,'<').replace(/&gt;/gi,'>').replace(/<[^>]*>/g,'').replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/&amp;/gi,'&').trim().slice(0,max):'';
 const first=x=>text(list(x)[0]);
 export const normalizeDoi=value=>{
  const s=text(value,300).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i,'').replace(/^doi:\s*/i,'').toLowerCase();

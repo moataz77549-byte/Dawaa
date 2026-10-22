@@ -400,6 +400,18 @@ class _ContentScreenState extends ConsumerState<ContentScreen> {
               SelectableText(
                 '${x['source_url']}\n${x['license']}\n${x['attribution']}',
               ),
+              if (x['canonical_concept_id'] != null) ...[
+                SelectableText(
+                  'RxCUI: ${x['source_native_id']}\n${x['provenance']['license']}\n${x['fetched_at']}',
+                ),
+                Text(
+                  tr(
+                    ref,
+                    'الاسم العربي مسودة مستقلة تحتاج مراجعة',
+                    'Arabic name: independent draft awaiting review',
+                  ),
+                ),
+              ],
               TextButton(
                 onPressed: () => launchUrl(
                   Uri.parse(x['source_url']),

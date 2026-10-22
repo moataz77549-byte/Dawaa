@@ -181,14 +181,31 @@ class PackManager extends ChangeNotifier {
       if (data['version'] != 1 || data['items'] is! List) {
         throw FormatException('Invalid content schema');
       }
+      final contentIds = <String>{};
       for (final item in data['items']) {
         final x = Map<String, dynamic>.from(item);
-        if (x['status'] != 'published' ||
+        if (!contentIds.add(x['id'] as String? ?? '') ||
+            x['status'] != 'published' ||
             x['clinical'] != false ||
             x['license'] != 'CC-BY-4.0' ||
             x['id'] is! String ||
             !RegExp(r'^[a-z0-9-]+$').hasMatch(x['id'])) {
           throw FormatException('Unlicensed or clinical content');
+        }
+        if (x['canonical_concept_id'] != null) {
+          final provenance = x['provenance'];
+          if (provenance is! Map ||
+              provenance['offline_metadata_allowed'] != true ||
+              provenance['content_class'] != 'identity_metadata' ||
+              provenance['source_id'] != x['source_id'] ||
+              provenance['license'] is! String ||
+              !RegExp(
+                r'^[a-f0-9]{64}$',
+              ).hasMatch(provenance['payload_hash'] as String? ?? '')) {
+            throw FormatException(
+              'Metadata reuse permission or provenance missing',
+            );
+          }
         }
         for (final key in [
           'title_ar',

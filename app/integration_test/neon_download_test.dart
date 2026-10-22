@@ -25,7 +25,24 @@ void main() {
     );
     await manager.install(manifest);
     expect(manager.status, 'complete', reason: manager.error);
-    expect((await db.packs()).single['version'], 1);
+    expect(
+      (await db.packs()).firstWhere(
+        (p) => p['id'] == 'circulation-demo',
+      )['version'],
+      1,
+    );
+    if ((await db.packs()).any((p) => p['id'] == 'medical-identities')) {
+      await manager.remove('medical-identities');
+    }
+    await manager.install(
+      PackManifest(
+        await container.read(apiProvider).manifest('medical-identities'),
+      ),
+    );
+    expect(manager.status, 'complete', reason: manager.error);
+    final identity = (await db.contents(search: 'RxCUI:161')).single;
+    await db.bookmark(identity['id']);
+    await db.recordRead(identity['id']);
     expect(await db.content('cloud-circulation'), isNotNull);
     await tester.pumpWidget(const SizedBox.shrink());
   }, timeout: const Timeout(Duration(minutes: 5)));

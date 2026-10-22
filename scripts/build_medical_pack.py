@@ -1,0 +1,16 @@
+"""Rebuild the metadata-only pack from a verified, committed source projection."""
+import hashlib, json
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+rows=json.loads((ROOT/'backend/db/seed/verified_ingredient_metadata.json').read_text())
+items=[]
+for r in rows:
+    assert r['kind']=='ingredient' and r['source_id']=='rxnorm' and r['scheme']=='RxCUI'
+    provenance={k:r[k] for k in ['source_id','source_native_id','canonical_url','license','payload_hash','fetched_at']}
+    provenance.update(offline_metadata_allowed=True,content_class='identity_metadata',translation_state='needs_review',translation_source='Independent Dawa & Hayah draft; not NLM translation')
+    items.append(dict(id='knowledge-'+r['id'],canonical_concept_id=r['id'],category='medicines',title_ar=r['arabic_name'],title_en=r['preferred_name'],body_ar=f"اسم إنجليزي ومعرّف من RxNorm: {r['preferred_name']}؛ RxCUI:{r['value']}. الاسم العربي مسودة مستقلة تحتاج مراجعة. هذه بطاقة تعريف مصطلح، ولا تتضمن جرعة أو توصية علاجية.",body_en=f"RxNorm name and identifier: {r['preferred_name']}; RxCUI:{r['value']}. The Arabic name is an independent draft awaiting review. This terminology identity card contains no dosage or treatment recommendation.",source_id=r['source_id'],source_native_id=r['source_native_id'],source_title='NLM RxNorm terminology metadata',source_url=r['canonical_url'],license='CC-BY-4.0',attribution='Dawa & Hayah original wrapper and Arabic draft: CC-BY-4.0. NLM RxNorm non-proprietary names/identifiers retain their source terms; no endorsement.',review_status='needs_review',status='published',clinical=False,revision=1,identifiers=[dict(scheme=r['scheme'],value=r['value'])],provenance=provenance,fetched_at=r['fetched_at']))
+folder=ROOT/'backend/storage/packs/medical-identities/1';folder.mkdir(parents=True,exist_ok=True)
+data=(json.dumps(dict(version=1,items=items),ensure_ascii=False,indent=2)+'\n').encode();(folder/'content.json').write_bytes(data)
+manifest=dict(pack_id='medical-identities',pack_version=1,schema_version=1,min_app_version='0.2.0',min_local_schema=2,title_ar='معرّفات دوائية ومصادرها',title_en='Medicine terminology identifiers and sources',scope_type='knowledge',scope_id='ingredient-identities',language='bilingual',asset_quality='text',category='medicines',description='20 verified RxNorm ingredient identities. Independent Arabic drafts pending review. No clinical claims or dosing.',published_at='2026-10-22T00:00:00Z',publisher='Dawa & Hayah',source_references=['https://lhncbc.nlm.nih.gov/RxNav/TermsofService.html'],license='CC-BY-4.0',attribution='Original wrapper CC-BY-4.0; NLM non-proprietary RxNorm metadata with source attribution; independent Arabic drafts.',status='published',dependencies=[],files=[dict(object_key='medical-identities/1/content.json',relative_path='content.json',mime_type='application/json',size_bytes=len(data),sha256=hashlib.sha256(data).hexdigest(),asset_id='medical-identities-content-v1')],size_bytes=len(data),total_uncompressed_bytes=len(data))
+(ROOT/'backend/storage/manifests/medical-identities.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps(dict(items=len(items),bytes=len(data),sha256=hashlib.sha256(data).hexdigest())))
