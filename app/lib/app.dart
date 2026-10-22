@@ -12,6 +12,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'core/providers.dart';
 import 'data/packs/manifest.dart';
 import 'features/anatomy/viewer.dart';
+import 'features/knowledge/screens.dart';
 
 String tr(WidgetRef ref, String ar, String en) =>
     ref.watch(localeProvider) == 'ar' ? ar : en;
@@ -24,6 +25,16 @@ final router = GoRouter(
     GoRoute(
       path: '/content/:id',
       builder: (c, s) => ContentScreen(id: s.pathParameters['id']!),
+    ),
+    GoRoute(path: '/sources', builder: (c, s) => const MedicalSourcesScreen()),
+    GoRoute(
+      path: '/knowledge-search',
+      builder: (c, s) =>
+          KnowledgeSearchScreen(initialQuery: s.uri.queryParameters['q'] ?? ''),
+    ),
+    GoRoute(
+      path: '/concept/:id',
+      builder: (c, s) => KnowledgeConceptScreen(id: s.pathParameters['id']!),
     ),
     GoRoute(path: '/model', builder: (c, s) => const ModelViewer()),
   ],
@@ -188,6 +199,18 @@ class _ShellState extends ConsumerState<Shell> {
               ),
             ),
             onChanged: (x) => setState(() => search = x),
+          ),
+          TextButton.icon(
+            onPressed: () => context.push(
+              Uri(
+                path: '/knowledge-search',
+                queryParameters: {'q': search},
+              ).toString(),
+            ),
+            icon: const Icon(Icons.travel_explore),
+            label: Text(
+              tr(ref, 'توسيع البحث عبر الإنترنت', 'Expand search online'),
+            ),
           ),
           if (index == 4)
             SwitchListTile(

@@ -1,0 +1,472 @@
+{
+  "environment": "isolated Neon development branch",
+  "branch_id": "br-broad-recipe-ba4bc7dt",
+  "results": [
+    {
+      "source": "rxnorm",
+      "request": {
+        "identifiers": [
+          "161",
+          "1191",
+          "5640",
+          "723",
+          "17767"
+        ],
+        "limit": 1,
+        "idempotency_key": "verified-identities-1"
+      },
+      "tested_at": "2026-10-22T22:05:12.561987+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "3c0eb78c-e458-4c06-be05-814dbc59bd81",
+        "status": "completed",
+        "items_seen": 5,
+        "imported": 4,
+        "updated": 0,
+        "skipped": 1,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 5,
+          "cache_hits": 0,
+          "bytes": 599,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 13851
+    },
+    {
+      "source": "rxnorm",
+      "request": {
+        "identifiers": [
+          "6809",
+          "7646",
+          "435",
+          "20610",
+          "28889"
+        ],
+        "limit": 1,
+        "idempotency_key": "verified-identities-2"
+      },
+      "tested_at": "2026-10-22T22:05:27.413971+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "cb55c8a9-d15e-4ff2-afb5-e687a37c7246",
+        "status": "completed",
+        "items_seen": 5,
+        "imported": 5,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 5,
+          "cache_hits": 0,
+          "bytes": 599,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 12351
+    },
+    {
+      "source": "rxnorm",
+      "request": {
+        "identifiers": [
+          "52175",
+          "83367",
+          "36567",
+          "18631",
+          "3640"
+        ],
+        "limit": 1,
+        "idempotency_key": "verified-identities-3"
+      },
+      "tested_at": "2026-10-22T22:05:40.765924+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "e84ef014-74d4-46e5-b674-8b548fb2fd86",
+        "status": "completed",
+        "items_seen": 5,
+        "imported": 5,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 5,
+          "cache_hits": 0,
+          "bytes": 608,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 12528
+    },
+    {
+      "source": "rxnorm",
+      "request": {
+        "identifiers": [
+          "2231",
+          "11289",
+          "5487",
+          "9997",
+          "4603"
+        ],
+        "limit": 1,
+        "idempotency_key": "verified-identities-4"
+      },
+      "tested_at": "2026-10-22T22:05:54.293959+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "985675d2-d272-4a7f-80a2-ec6c35269058",
+        "status": "completed",
+        "items_seen": 5,
+        "imported": 5,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 5,
+          "cache_hits": 0,
+          "bytes": 621,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 12488
+    },
+    {
+      "source": "openfda",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-openfda"
+      },
+      "tested_at": "2026-10-22T22:06:07.782400+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "0b61f571-d5a4-4ec4-8d25-cd909fb495c4",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 1,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": "1",
+        "metrics": {
+          "requests": 1,
+          "cache_hits": 0,
+          "bytes": 7035,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 8031
+    },
+    {
+      "source": "dailymed",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-dailymed"
+      },
+      "tested_at": "2026-10-22T22:06:16.813916+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "e854edc0-757f-4c40-99ca-42f9bceefc41",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 1,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": "2",
+        "metrics": {
+          "requests": 1,
+          "cache_hits": 0,
+          "bytes": 699,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 8149
+    },
+    {
+      "source": "rxnorm",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-rxnorm"
+      },
+      "tested_at": "2026-10-22T22:06:25.963531+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "b4bb02a4-cc7e-42d2-a991-1d80bf5984c7",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 0,
+        "updated": 0,
+        "skipped": 1,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 2,
+          "cache_hits": 1,
+          "bytes": 32,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 9088
+    },
+    {
+      "source": "rxterms",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-rxterms"
+      },
+      "tested_at": "2026-10-22T22:06:36.052213+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "13d10316-8777-4811-9c10-8a17596a9cad",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 1,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 1,
+          "cache_hits": 0,
+          "bytes": 357,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 8088
+    },
+    {
+      "source": "rxclass",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-rxclass"
+      },
+      "tested_at": "2026-10-22T22:06:45.140763+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "d3ac2acb-99b6-4048-b7aa-d45c25fc7529",
+        "status": "completed",
+        "items_seen": 3,
+        "imported": 3,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 1,
+          "cache_hits": 0,
+          "bytes": 702,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 8248
+    },
+    {
+      "source": "pubchem",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-pubchem"
+      },
+      "tested_at": "2026-10-22T22:06:54.389297+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "3e088494-d24b-461d-b17d-8d61e142b24a",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 1,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 1,
+          "cache_hits": 0,
+          "bytes": 218,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 8007
+    },
+    {
+      "source": "pubmed",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-pubmed"
+      },
+      "tested_at": "2026-10-22T22:07:03.397185+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "4271ba2c-fb91-4b33-a713-a4a77664a5c1",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 1,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": "1",
+        "metrics": {
+          "requests": 2,
+          "cache_hits": 0,
+          "bytes": 2814,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 8453
+    },
+    {
+      "source": "medlineplus",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-medlineplus"
+      },
+      "tested_at": "2026-10-22T22:07:12.851187+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "e4596437-b48e-4d29-9f5d-9a8002e91e1b",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 1,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 1,
+          "cache_hits": 0,
+          "bytes": 8699,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 6572
+    },
+    {
+      "source": "europepmc",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-europepmc"
+      },
+      "tested_at": "2026-10-22T22:07:20.424315+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "dfc6eb14-39ff-4e9b-abfc-6c0e9fd91621",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 1,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": "AoIIQEQxlSg1NjM3MjIyOQ==",
+        "metrics": {
+          "requests": 1,
+          "cache_hits": 0,
+          "bytes": 1118,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 7182
+    },
+    {
+      "source": "crossref",
+      "request": {
+        "limit": 1,
+        "idempotency_key": "live-contract-crossref"
+      },
+      "tested_at": "2026-10-22T22:07:28.606799+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "e29be37d-5fe0-40e7-9660-c8727df94500",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 1,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": "1",
+        "metrics": {
+          "requests": 1,
+          "cache_hits": 0,
+          "bytes": 271,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 7435
+    },
+    {
+      "source": "pubmed",
+      "request": {
+        "identifiers": [
+          "9500320"
+        ],
+        "limit": 1,
+        "idempotency_key": "retraction-source-example"
+      },
+      "tested_at": "2026-10-22T22:07:37.043449+00:00",
+      "status": 200,
+      "data": {
+        "job_id": "9e4d97e8-faf2-4535-ba87-36742eedaa61",
+        "status": "completed",
+        "items_seen": 1,
+        "imported": 1,
+        "updated": 0,
+        "skipped": 0,
+        "duplicates": 0,
+        "quarantined": 0,
+        "failed": 0,
+        "next_cursor": null,
+        "metrics": {
+          "requests": 1,
+          "cache_hits": 0,
+          "bytes": 6373,
+          "retries": 0
+        },
+        "coverage": "bounded_sample; not an exhaustive clinical database"
+      },
+      "elapsed_ms": 7191
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "stage": 1,
+  "workflow_run": 39859360374,
+  "head_sha": "47f02b3c1507ae69bd3d9511bced3403db352340",
+  "device_kind": "GitHub Actions x86_64 emulator; debug instrumentation, not physical ARM64 benchmark",
+  "android_35": {
+    "job_id": 120105752681,
+    "result": "passed",
+    "seed_first_open_offline": true,
+    "real_neon_install": true,
+    "network_verified": "Active default network: none",
+    "downloaded_text_png_glb": true,
+    "draw_calls": 1,
+    "geometries": 1,
+    "glb_load_and_first_render_ms": 227,
+    "viewer_ready_ms": 1156,
+    "flutter_app_rss_bytes": 522297344
+  },
+  "android_26": {
+    "job_id": 120105752267,
+    "result": "passed",
+    "seed_first_open_offline": true,
+    "real_neon_install": true,
+    "network_verified": "Active default network: none",
+    "downloaded_text_png_glb": true,
+    "draw_calls": 1,
+    "geometries": 1,
+    "glb_load_and_first_render_ms": 298,
+    "viewer_ready_ms": 2652,
+    "flutter_app_rss_bytes": 367603712
+  },
+  "corrective_change": "Google APIs image for API 26 and AOSP image for API 35; official integration driver with direct VM service, explicit process stop and retained app data."
+}
