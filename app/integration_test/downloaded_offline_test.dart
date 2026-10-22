@@ -26,12 +26,7 @@ void main() {
       expect(identity['title_ar'], 'أسيتامينوفين');
       expect((await db.provenanceFor(identity['id']))!['source_id'], 'rxnorm');
       expect(await db.bookmarked(identity['id']), true);
-      await tester.pumpWidget(
-        UncontrolledProviderScope(
-          container: container,
-          child: MaterialApp(home: ContentScreen(id: identity['id'])),
-        ),
-      );
+      router.go('/content/${identity['id']}');
       await tester.pumpAndSettle();
       expect(find.textContaining('RxCUI: 161'), findsOneWidget);
       expect(find.textContaining('الاسم العربي مسودة مستقلة'), findsOneWidget);

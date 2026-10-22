@@ -57,3 +57,9 @@ test('disabled sources and URL escapes never execute',async()=>{
  await assert.rejects(t.get(sourceById('rxnorm'),'https://evil.invalid/'),e=>e.code==='unsafe_source_url');assert.equal(calls,0);
  assert.ok(futureSources.every(x=>!x.enabled&&!x.offline_permission));
 });
+
+test('escaped source title markup is plain text, not an encoded HTML label',()=>{
+ const body=structuredClone(fixtures.europepmc);body.resultList.result[0].title='&lt;b&gt;Acetaminophen&lt;/b&gt; &amp; metadata';
+ const r=new MedicalSourceAdapter('europepmc').normalize(envelope(body)).records[0];
+ assert.equal(r.title,'Acetaminophen & metadata');
+});

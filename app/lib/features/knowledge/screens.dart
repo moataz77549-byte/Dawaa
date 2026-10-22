@@ -179,7 +179,9 @@ class _KnowledgeSearchState extends ConsumerState<KnowledgeSearchScreen> {
                     Card(
                       child: ListTile(
                         title: Text(
-                          row['arabic_name'] ?? row['preferred_name'],
+                          ref.watch(localeProvider) == 'ar'
+                              ? row['arabic_name'] ?? row['preferred_name']
+                              : row['preferred_name'],
                         ),
                         subtitle: Text(
                           '${_kind(row['kind'], ref)} • ${_t(ref, 'مرجع سحابي', 'Cloud reference')}',
@@ -250,6 +252,20 @@ class _KnowledgeConceptState extends ConsumerState<KnowledgeConceptScreen> {
             ),
             if (row['arabic_name'] != null) Text(row['arabic_name']),
             Text(_kind(row['kind'], ref)),
+            if (row['kind'] == 'ingredient')
+              TextButton(
+                onPressed: () => _open(
+                  context,
+                  'https://pubchem.ncbi.nlm.nih.gov/#query=${Uri.encodeComponent(row['preferred_name'])}',
+                ),
+                child: Text(
+                  _t(
+                    ref,
+                    'بحث كيميائي بالاسم — لا يثبت تطابق الكيانات',
+                    'Chemical name search — does not establish entity equivalence',
+                  ),
+                ),
+              ),
             const SizedBox(height: 12),
             Card(
               child: Padding(
@@ -485,7 +501,7 @@ class _MedicalSourcesState extends ConsumerState<MedicalSourcesScreen> {
                 child: ExpansionTile(
                   title: Text(s['source_title']),
                   subtitle: Text(
-                    '${s['health_status']} • ${_date(s['last_success_at'])}',
+                    '${_status(s['health_status'], ref)} • ${_date(s['last_success_at'])}',
                   ),
                   childrenPadding: const EdgeInsets.all(16),
                   children: [
