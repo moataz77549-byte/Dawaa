@@ -26,6 +26,12 @@ class _ModelViewerState extends State<ModelViewer> {
 
   Future<void> start() async {
     try {
+      final available = await const MethodChannel(
+        'ye.moataz.dawa/storage',
+      ).invokeMethod<bool>('webViewAvailable');
+      if (available != true) {
+        throw StateError('WebView provider unavailable');
+      }
       final model =
           widget.bytes ??
           (widget.file == null

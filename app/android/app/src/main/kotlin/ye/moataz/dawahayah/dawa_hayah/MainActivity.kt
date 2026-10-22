@@ -1,6 +1,7 @@
 package ye.moataz.dawahayah.dawa_hayah
 
 import android.os.StatFs
+import android.webkit.WebView
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -12,6 +13,8 @@ class MainActivity : FlutterActivity() {
             .setMethodCallHandler { call, result ->
                 if (call.method == "availableBytes") {
                     result.success(StatFs(filesDir.absolutePath).availableBytes)
+                } else if (call.method == "webViewAvailable") {
+                    result.success(WebView.getCurrentWebViewPackage() != null)
                 } else result.notImplemented()
             }
     }
