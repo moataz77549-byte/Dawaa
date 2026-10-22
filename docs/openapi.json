@@ -1,0 +1,894 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Dawa & Hayah API",
+    "version": "0.2.0",
+    "description": "Identity/bibliographic metadata does not grant clinical approval. Existing content/pack API remains compatible. Public GET endpoints also accept HEAD."
+  },
+  "servers": [
+    {
+      "url": "https://br-noisy-poetry-bats6www-api.compute.c-8.eu-central-1.aws.neon.tech"
+    },
+    {
+      "url": "https://br-broad-recipe-ba4bc7dt-api.compute.c-8.eu-central-1.aws.neon.tech",
+      "description": "Isolated Stage 2 development"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Database health and schema version",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        }
+      }
+    },
+    "/v1/catalog": {
+      "get": {
+        "summary": "Licensed published content",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        }
+      }
+    },
+    "/v1/content/{id}": {
+      "get": {
+        "summary": "Bilingual educational content",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/packs": {
+      "get": {
+        "summary": "Published pack manifests",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        }
+      }
+    },
+    "/v1/packs/{id}/manifest": {
+      "get": {
+        "summary": "Latest trusted pack manifest",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/assets/{id}/access": {
+      "get": {
+        "summary": "No-store signed private object GET",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/updates": {
+      "get": {
+        "summary": "Legacy content updates",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        }
+      }
+    },
+    "/v1/sources": {
+      "get": {
+        "summary": "Source registry and real connector health",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        }
+      }
+    },
+    "/v1/sources/{id}/status": {
+      "get": {
+        "summary": "Connector status",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/concepts/{id}": {
+      "get": {
+        "summary": "Concept identity and field provenance",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/concepts/{id}/references": {
+      "get": {
+        "summary": "Explicit linked bibliography",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/citations/{id}": {
+      "get": {
+        "summary": "Bibliography and retraction state",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/search": {
+      "get": {
+        "summary": "Search sampled metadata index; not exhaustive upstream search",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ar",
+                "en",
+                "la"
+              ],
+              "default": "ar"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 25
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 1
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ingredient",
+                "precise_ingredient",
+                "clinical_drug",
+                "product",
+                "chemical_compound",
+                "research",
+                "disease_topic",
+                "anatomy_term"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "/v1/drugs/lookup": {
+      "get": {
+        "summary": "Search sampled metadata index; not exhaustive upstream search",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ar",
+                "en",
+                "la"
+              ],
+              "default": "ar"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 25
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 1
+            }
+          }
+        ]
+      }
+    },
+    "/v1/diseases/lookup": {
+      "get": {
+        "summary": "Search sampled metadata index; not exhaustive upstream search",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ar",
+                "en",
+                "la"
+              ],
+              "default": "ar"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 25
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 1
+            }
+          }
+        ]
+      }
+    },
+    "/v1/research/search": {
+      "get": {
+        "summary": "Search sampled metadata index; not exhaustive upstream search",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 200
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ar",
+                "en",
+                "la"
+              ],
+              "default": "ar"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 25
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 1
+            }
+          }
+        ]
+      }
+    },
+    "/v1/catalog/updates": {
+      "get": {
+        "summary": "Metadata revision page",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "parameters": [
+          {
+            "name": "since",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/internal/review-queue": {
+      "get": {
+        "summary": "Private operator metadata; no clinical publication",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "security": [
+          {
+            "sourceServiceBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/internal/source-jobs": {
+      "get": {
+        "summary": "Private operator metadata; no clinical publication",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "security": [
+          {
+            "sourceServiceBearer": []
+          }
+        ]
+      }
+    },
+    "/v1/internal/sources/{id}/refresh": {
+      "post": {
+        "summary": "Bounded authenticated ingestion with request-bound idempotency",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "security": [
+          {
+            "sourceServiceBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "cursor": {
+                    "type": "string",
+                    "maxLength": 1000
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  },
+                  "identifiers": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "items": {
+                      "type": "string",
+                      "maxLength": 120
+                    }
+                  },
+                  "idempotency_key": {
+                    "type": "string",
+                    "maxLength": 180
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/internal/source-cron": {
+      "post": {
+        "summary": "Internal genuine Neon schedule delivery only; not bearer or client callable",
+        "responses": {
+          "200": {
+            "description": "Successful bounded response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not public or absent"
+          },
+          "429": {
+            "description": "Rate/budget limit"
+          },
+          "503": {
+            "description": "Temporarily unavailable"
+          }
+        },
+        "x-neon-attested-delivery-required": true
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "sourceServiceBearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Server operator only; never shipped in Flutter"
+      }
+    }
+  }
+}

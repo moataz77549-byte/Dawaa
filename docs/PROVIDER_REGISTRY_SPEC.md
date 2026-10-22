@@ -1,0 +1,13 @@
+# Provider registry
+
+`backend/knowledge/registry.mjs` is the versioned source of truth. Active entries contain source ID/name, authority/domain, HTTPS origin, API version, license evidence URL, attribution, access mode, authorization requirement/location, per-source request limit, locales, freshness policy, health placeholder, fallback rank, offline/redistribution flags and terms-check date. `source_policies.registry` persists this exact projection; runtime health comes from `source_connector_status`, never a hard-coded success flag.
+
+Modes: LIVE_PROXY, CACHED_METADATA, LICENSED_IMPORT, LINK_ONLY, FUTURE_DISABLED. Permissions describe only the explicitly documented metadata projection. They do not license every response field. All clinical-text permissions default false. RxClass fetches a bounded live response but stores only availability/provenance pointers; underlying classification names/IDs are excluded.
+
+Each adapter exposes search, identifier lookup, incremental fetch, health, field discovery, normalize, validate, deduplicate, stage, quarantine, audit and blocked publishCandidate. Shared transport owns retry/circuit behavior. Health tests are bounded real requests; CI normally reads recorded successful ingestion to avoid provider quota consumption. MedlinePlus has no universal numeric identifier lookup and explicitly rejects that unsupported operation.
+
+Jobs use one direct-Postgres session advisory lease across isolates, a database limit of 32 attempts in a rolling 24 hours, at most five identifiers/items per operator request, and request-shape-bound idempotency. Completed replays do not consume another fetch. Failed attempts count against budget. Retries use exponential delay/jitter and bounded Retry-After; no infinite loops. No phone calls upstream providers directly.
+
+Transport: HTTPS origin allowlist, redirects refused, strict UTF-8, expected JSON/XML, no DTD/entities, 2 MiB per response, 4 MiB and 16 requests per job, 90-second deadline and 20-second request ceiling. Default one request/second/host. Conditional cache holds at most 64 allowed metadata responses; process-local cache is disposable. FDA/MedlinePlus bodies and RxClass bodies are not cached. Circuit state is persisted after failed jobs. Global distributed DDoS protection is outside this small application control.
+
+Freshness TTL is an advisory 24 hours, not a promise of daily exhaustive refresh. Production scheduling rotates one bounded source sample every six hours; ten providers take 60 hours per rotation. Last-success and source timestamps remain visible. No automatic bulk ingestion or paid quota upgrade.
