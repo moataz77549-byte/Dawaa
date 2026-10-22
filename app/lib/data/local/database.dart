@@ -8,20 +8,45 @@ String normalize(String text) => text
     .toLowerCase()
     .replaceAll(RegExp('[أإآٱ]'), 'ا')
     .replaceAll('ى', 'ي')
+    .replaceAll('ة', 'ه')
     .replaceAll(RegExp(r'[\u064B-\u065F\u0670ـ]'), '');
 
 class LocalDatabase extends GeneratedDatabase {
   LocalDatabase(super.executor);
   factory LocalDatabase.memory() => LocalDatabase(NativeDatabase.memory());
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
   @override
   Iterable<TableInfo<Table, Object?>> get allTables => [];
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (m) async {
-      for (final sql in schema) {
+      for (final sql in [...schema, ...knowledgeSchema]) {
         await customStatement(sql);
+      }
+    },
+    onUpgrade: (m, from, to) async {
+      if (to < from) {
+        throw StateError('Schema downgrade refused; existing data preserved');
+      }
+      if (from < 2) {
+        await transaction(() async {
+          for (final sql in knowledgeSchema) {
+            await customStatement(sql);
+          }
+          final rows = await customSelect(
+            'SELECT data FROM local_content',
+          ).get();
+          for (final row in rows) {
+            final value =
+                jsonDecode(row.read<String>('data')) as Map<String, dynamic>;
+            await customStatement(
+              'INSERT OR REPLACE INTO local_index VALUES(?,?)',
+              [value['id'], contentIndex(value)],
+            );
+            await putProvenance(value);
+          }
+        });
       }
     },
     beforeOpen: (d) async {
@@ -40,6 +65,53 @@ class LocalDatabase extends GeneratedDatabase {
     'CREATE TABLE settings(key TEXT PRIMARY KEY, value TEXT NOT NULL)',
     'CREATE TABLE local_asset_links(pack_id TEXT, path TEXT, PRIMARY KEY(pack_id,path))',
   ];
+  static const knowledgeSchema = [
+    'CREATE TABLE local_provenance(content_id TEXT PRIMARY KEY REFERENCES local_content(id) ON DELETE CASCADE, source_id TEXT NOT NULL, source_native_id TEXT, canonical_id TEXT, provenance_json TEXT NOT NULL, fetched_at TEXT, review_state TEXT NOT NULL)',
+    'CREATE INDEX provenance_concept ON local_provenance(canonical_id)',
+  ];
+  static String contentIndex(Map<String, dynamic> value) {
+    final aliases = (value['aliases'] as List? ?? []).whereType<String>().join(
+      ' ',
+    );
+    final ids = (value['identifiers'] as List? ?? [])
+        .map((i) => '${i['scheme']}:${i['value']} ${i['value']}')
+        .join(' ');
+    return normalize(
+      '${value['title_ar']} ${value['title_en']} ${value['body_ar']} ${value['body_en']} ${value['verified_latin_term'] ?? ''} $aliases $ids',
+    );
+  }
+
+  Future<void> putProvenance(Map<String, dynamic> value) => customStatement(
+    'INSERT OR REPLACE INTO local_provenance VALUES(?,?,?,?,?,?,?)',
+    [
+      value['id'],
+      value['source_id'] ?? value['id'],
+      value['source_native_id'],
+      value['canonical_concept_id'],
+      jsonEncode(
+        value['provenance'] ??
+            {
+              'source_title': value['source_title'],
+              'source_url': value['source_url'],
+              'license': value['license'],
+              'attribution': value['attribution'],
+            },
+      ),
+      value['fetched_at'],
+      value['review_status'] ?? 'needs_review',
+    ],
+  );
+  Future<Map<String, dynamic>?> provenanceFor(String id) async {
+    final row = await customSelect(
+      'SELECT provenance_json FROM local_provenance WHERE content_id=?',
+      variables: [Variable(id)],
+    ).getSingleOrNull();
+    return row == null
+        ? null
+        : jsonDecode(row.read<String>('provenance_json'))
+              as Map<String, dynamic>;
+  }
+
   Future<void> seed({String? json}) async {
     final data =
         jsonDecode(
@@ -82,10 +154,9 @@ class LocalDatabase extends GeneratedDatabase {
     }
     await customStatement('INSERT OR REPLACE INTO local_index VALUES(?,?)', [
       x['id'],
-      normalize(
-        '${x['title_ar']} ${x['title_en']} ${x['body_ar']} ${x['body_en']}',
-      ),
+      contentIndex(x),
     ]);
+    await putProvenance(x);
   }
 
   Future<List<Map<String, dynamic>>> contents({

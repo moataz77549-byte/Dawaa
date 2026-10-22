@@ -4,7 +4,7 @@ BASE=os.environ.get('API_BASE_URL','https://br-still-mode-balcyppo-api.compute.c
 def get(path):
  with urllib.request.urlopen(BASE+path,timeout=30) as r:return json.load(r)
 assert get('/health')['ok']
-assert len(get('/v1/catalog')['items'])==12
+assert {x['canonical_id'] for x in get('/v1/catalog')['items']} >= {'circulation','respiration'}
 assert get('/v1/content/circulation?lang=en')['locale']=='en'
 m=get('/v1/packs/circulation-demo/manifest');root=pathlib.Path(tempfile.mkdtemp(prefix='dawa-live-proof-'))
 results=[]

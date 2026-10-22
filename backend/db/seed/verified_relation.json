@@ -1,0 +1,11 @@
+{
+  "source_url": "https://rxnav.nlm.nih.gov/REST/rxcui/198440/related.json?tty=IN",
+  "source_id": "rxnorm",
+  "source_native_id": "198440",
+  "relation": "contains_ingredient",
+  "from_rxcui": "198440",
+  "to_rxcui": "161",
+  "verified_at": "2026-10-22T22:28:00Z",
+  "evidence_type": "Observed live response projection; not a raw response archive",
+  "projection": {"tty":"IN","rxcui":"161","name":"acetaminophen","suppress":"N"}
+}

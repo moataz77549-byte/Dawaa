@@ -1,0 +1,11 @@
+# Source connector test results
+
+Real hosted ingestion results, including job IDs, request counts, bytes, cache hits, cursors and elapsed time, are in `STAGE_02_LIVE_JOB_EVIDENCE.json`. All eight required providers plus RxTerms/RxClass completed actual HTTP→Neon Function→Postgres jobs. These are not mocked successes. 20 ingredient identities came from four bounded RxNorm identifier batches. The RxClass result is private provenance only because vocabulary reuse remains unverified.
+
+Local Node suite: 27 tests cover ten mocked source contracts, provenance/schema rejection, identity separation, malformed payload/UTF-8, 404, 429/503 retry/circuit, timeout, conditional GET, origin/disabled-provider rejection, private authentication, trigger forgery, bound typed lookups and invalid pagination/language/UUID. Mocked negative paths are not claimed as induced failures of public upstream services.
+
+Real Neon SQL: migrations 004/005 repeated safely; rollback guards reject kind mismatch, missing review, missing clinical rights, reader base-table/write access and disabled/draft leakage; source changes preserve approval while flagging stale facts, and retraction invalidates linked clinical content. QA fixtures are rolled back. CI additionally applies all migrations twice on fresh Postgres 17. The first CI attempt found a view-column mismatch when rerunning 004 after 005; 004 now preserves the appended enabled column.
+
+Flutter: 15 unit/widget tests passed locally, including real disk schema 1→2 migration/reopen, optional metadata pack, offline provenance, integrity rollback and RTL/LTR. Analyze is clean. Android device and internal ARM64 job evidence is recorded separately after completion; no physical-device result is claimed.
+
+Real trigger: Neon schedule `trigger-9b1a801e-45fc-47c3-92e4-440bf4c6fe5f` invoked the development function at 2026-10-22T22:23Z; job `e8e2e672-9492-45f9-9c0e-cac7d6d55b45` completed for PubChem. Test schedule was changed to six-hour cadence and disabled on dev. A forged public trigger request returned 403. Initial private pack upload/download and SHA verification passed for all 20 cards. Production promotion and final CI outcomes are tracked in the implementation report.

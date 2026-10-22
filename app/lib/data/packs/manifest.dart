@@ -13,13 +13,17 @@ class PackManifest {
       throw FormatException('Invalid version');
     }
     final min = data['min_app_version'];
-    if (min is! String || min != '0.1.0') {
+    if (min is! String || !_compatibleVersion(min)) {
       throw FormatException('Unsupported minimum app version');
     }
     if ((data['dependencies'] as List).isNotEmpty) {
       throw FormatException(
         'Dependency packs require explicit installation first',
       );
+    }
+    if ((data['min_local_schema'] ?? 1) is! int ||
+        (data['min_local_schema'] ?? 1) > 2) {
+      throw FormatException('Unsupported local schema');
     }
     final paths = <String>{};
     var total = 0;
@@ -57,6 +61,16 @@ class PackManifest {
       throw FormatException('Size mismatch or quota exceeded');
     }
   }
+  static bool _compatibleVersion(String version) {
+    if (!RegExp(r'^\d+\.\d+\.\d+$').hasMatch(version)) return false;
+    final requested = version.split('.').map(int.parse).toList();
+    const current = [0, 2, 0];
+    for (var i = 0; i < 3; i++) {
+      if (requested[i] != current[i]) return requested[i] < current[i];
+    }
+    return true;
+  }
+
   final Map<String, dynamic> data;
   String get id => data['pack_id'];
   int get version => data['pack_version'];

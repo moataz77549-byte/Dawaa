@@ -114,7 +114,7 @@ void main() {
       expect(await db.content('cloud-circulation'), isNull);
       expect(await db.bookmarked('cloud-circulation'), isTrue);
       expect(await db.bookmarked('circulation'), isTrue);
-      expect((await db.contents()).length, 12);
+      expect((await db.contents()).length, 14);
     },
   );
   test('corrupt update keeps previous immutable version and data', () async {

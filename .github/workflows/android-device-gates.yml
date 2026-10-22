@@ -2,7 +2,7 @@ name: Android device gates (no APK distribution)
 on:
   workflow_dispatch:
   push:
-    branches: [stage-01-neon-offline-foundation]
+    branches: [stage-01-neon-offline-foundation, stage-02-medical-knowledge-sources]
     paths: ['app/**', '.github/workflows/android-device-gates.yml', 'scripts/device_network.sh']
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
@@ -50,14 +50,14 @@ jobs:
             adb root
             adb wait-for-device
             bash ../scripts/device_network.sh off
-            timeout 10m flutter drive --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/offline_test.dart
+            timeout 10m flutter drive --dart-define=API_BASE_URL=https://br-broad-recipe-ba4bc7dt-api.compute.c-8.eu-central-1.aws.neon.tech --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/offline_test.dart
             adb shell am force-stop ye.moataz.dawahayah.dawa_hayah
             adb forward --remove-all
             bash ../scripts/device_network.sh on
-            timeout 10m flutter drive --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/neon_download_test.dart
+            timeout 10m flutter drive --dart-define=API_BASE_URL=https://br-broad-recipe-ba4bc7dt-api.compute.c-8.eu-central-1.aws.neon.tech --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/neon_download_test.dart
             adb shell am force-stop ye.moataz.dawahayah.dawa_hayah
             adb forward --remove-all
             bash ../scripts/device_network.sh off
-            timeout 10m flutter drive --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/downloaded_offline_test.dart
+            timeout 10m flutter drive --dart-define=API_BASE_URL=https://br-broad-recipe-ba4bc7dt-api.compute.c-8.eu-central-1.aws.neon.tech --no-dds --keep-app-running --driver=test_driver/integration_test.dart --target=integration_test/downloaded_offline_test.dart
             adb shell am force-stop ye.moataz.dawahayah.dawa_hayah
             adb forward --remove-all

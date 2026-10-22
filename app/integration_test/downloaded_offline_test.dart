@@ -19,7 +19,17 @@ void main() {
         tester.element(find.byType(DawaApp)),
       );
       final db = container.read(databaseProvider);
-      final pack = (await db.packs()).single;
+      final pack = (await db.packs()).firstWhere(
+        (p) => p['id'] == 'circulation-demo',
+      );
+      final identity = (await db.contents(search: 'RxCUI:161')).single;
+      expect(identity['title_ar'], 'أسيتامينوفين');
+      expect((await db.provenanceFor(identity['id']))!['source_id'], 'rxnorm');
+      expect(await db.bookmarked(identity['id']), true);
+      router.go('/content/${identity['id']}');
+      await tester.pumpAndSettle();
+      expect(find.textContaining('RxCUI: 161'), findsOneWidget);
+      expect(find.textContaining('الاسم العربي مسودة مستقلة'), findsOneWidget);
       expect((await db.content('cloud-circulation'))!['body_ar'], isNotEmpty);
       await tester.pumpWidget(
         MaterialApp(home: Image.file(File('${pack['directory']}/diagram.png'))),
